@@ -73,3 +73,10 @@
       //결과를 리턴해준다.
       return queryString;
    }
+  // 인자로 전달하는 문자열에 otps oject 에 있는 내용을 연결해서 문자열 얻어내는 함수
+  function render(template, opts) {
+  return new Function(
+    'return new Function (' + Object.keys(opts).reduce((args, arg) => args += '\'' + arg + '\',', '') + '\'return `' + template.replace(/(^|[^\\])'/g, '$1\\\'') + '`;\'' +
+    ').apply(null, ' + JSON.stringify(Object.keys(opts).reduce((vals, key) => vals.push(opts[key]) && vals, [])) + ');'
+  )();
+}

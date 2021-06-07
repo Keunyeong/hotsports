@@ -39,14 +39,38 @@
 		      console.log("모든 공부를 마쳤습니다. 불금 입니다. 주말 잘 보내세요.");
 		   });
 		
+		//인자로 전달한 작업을 수행할 Promise 객체를 생성해서 리턴해주는 함수
+		function doSomething(job){
+			let p= new Promise (function (resolve){
+				work(job, resolve);
+			});
+			return p ;
+		};
+		
+		doSomething("달리기")
+		.then(function(){
+			return doSomething("물마시기");
+		}).then(function(){
+			return doSomething("쉬기");
+		}).then(function(){
+			return doSomething("밥먹기");
+		}).then(function(){
+			console.log("모든 공부를 마쳤습니다. 불금 입니다. 주말 잘 보내세요.")
+		});
+		
+		work("달리기",function(){
+			fetch(work)
+			.then(function(){
+				work("쉬기",function(){
+					fetch(work)
+					.then(function(){
+						"밥먹기"
+					})
+				})
+			})
+		});
 		
 		
-		//work("달리기",function(){});
-		
-		//function(){
-			//fetch(work)
-			//.then()
-		//}
 	</script>
 </body>
 </html>

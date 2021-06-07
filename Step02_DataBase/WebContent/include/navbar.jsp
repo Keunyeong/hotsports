@@ -24,8 +24,11 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
                <ul class="navbar-nav flex-glow-1">
-                  <li class="nav-item">
+                 <li class="nav-item">
                       <a class="nav-link <%=thisPage.equals("member") ? "active" : "" %>" href="<%=request.getContextPath() %>/member/list.jsp">Member</a>
+                 </li>
+                 <li class="nav-item">
+                      <a class="nav-link <%=thisPage.equals("member2") ? "active" : "" %>" href="<%=request.getContextPath() %>/member/list2.jsp">Member2</a>
                  </li>
                  <li class="nav-item">
                       <a class="nav-link <%=thisPage.equals("todo") ? "active" : "" %>" href="<%=request.getContextPath() %>/todo/list.jsp">Todo</a>
