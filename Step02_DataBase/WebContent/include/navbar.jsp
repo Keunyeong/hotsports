@@ -33,6 +33,9 @@
                  <li class="nav-item">
                       <a class="nav-link <%=thisPage.equals("todo") ? "active" : "" %>" href="<%=request.getContextPath() %>/todo/list.jsp">Todo</a>
                  </li>
+                 <li class="nav-item">
+                      <a class="nav-link <%=thisPage.equals("todo2") ? "active" : "" %>" href="<%=request.getContextPath() %>/todo/list2.jsp">Todo2</a>
+                 </li>
                </ul>
                <div class="w-100 clearfix">
                   <a class="btn btn-danger btn-sm float-end ms-1" href="<%=request.getContextPath() %>/user/signup_form.jsp">회원가입</a>

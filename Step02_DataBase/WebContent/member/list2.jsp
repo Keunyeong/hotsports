@@ -8,11 +8,11 @@
 <jsp:include page="../include/resource.jsp"></jsp:include>
 <script id="one" type="text/template">
    <tr>
-      <td>\${num}</td>
-      <td>\${name}</td>
-      <td>\${addr}</td>
+      <td>\${tmp.num}</td>
+      <td>\${tmp.name}</td>
+      <td>\${tmp.addr}</td>
       <td>
-         <a href="updateform.jsp?num=\${num}">
+         <a href="updateform.jsp?num=\${tmp.num}">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
@@ -21,7 +21,7 @@
          </a>
       </td>
       <td>
-         <a href="delete.jsp?num=\${num}">
+         <a href="delete.jsp?num=\${tmp.num}">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -61,7 +61,7 @@
             </tr>
          </thead>
          <tbody>
-            
+           <%-- 이곳에 ajax를 활용 코드를 입력하여 이곳만 변경할 수 있게 한다. --%>
          </tbody>
       </table>
       <nav>
@@ -72,53 +72,39 @@
    </div>
    <script src="../js/gura_util.js"></script>
    <script>
-      //페이지가 처음 로딩 되었을때 1 페이지 내용을 보여 주면된다.
-      let pageNum=1;
-      //1 페이지의 내용을 ajax 로 요청하고 받아오기
-      ajaxPromise("ajax_list.jsp", "get", "pageNum="+pageNum)
-      .then(function(response){
-         //ajax_list.jsp 에서 JSON 문자열을 응답한다. 
-         return response.json();
-      })
-      .then(function(data){
-         //data 는 회원 목록이 들어 있는 배열이다. 
-         console.log(data);
-         
-         let trs = "";
-         for(let i=0; i<data.length; i++){
-            //tmp 는 회원 한명의 정보가 들어 있는 object 이다.
-            let tmp=data[i];
-            //tr 의 template 문자열을 읽어온다.
-            let template=document.querySelector("#one").innerText;
-            // template 문자열에 object 의 값을 넣어서 결과 문자열 html을 얻어낸다.
-            let result=render(template,tmp);
-            //결과를 trs 에 누적 시킨다.
-            trs += result; 
-            
-         }
-         // trs 를 html 로 해석해서 tbody 에 넣어주기
-         document.querySelector("tbody").innerHTML=trs;
-      });
       
-      ajaxPromise("ajax_pagination.jsp", "get", "pageNum="+pageNum)
-      .then(function(response){
-         return response.text();
-      })
-      .then(function(data){
-         console.log(data);
-         document.querySelector(".pagination").innerHTML=data;
-      });
+      //페이지 로딩시에 1페이지가 나오도록 한다. 
+      pageUpdate(1);
+      
+      //현재 페이지는 1페이지라고 history 의 상태를 바꿔준다.
+      history.replaceState(1,"","?pageNum=1");
    
-      //페이지 이동 버튼을 눌렀을때 호출되는 함수 
-      function movePage(pageNum){
+      function pageUpdate(pageNum){
+         //페이지의 내용을 ajax 로 요청하고 받아오기
          ajaxPromise("ajax_list.jsp", "get", "pageNum="+pageNum)
          .then(function(response){
-            return response.text();
+            //ajax_list.jsp 에서 JSON 문자열을 응답한다.
+            
+            return response.json();
          })
          .then(function(data){
+            //data 는 회원 목록이 들어 있는 배열이다. 
             console.log(data);
-            //응답된 tr 요소들을 tbody 에 HTML 형식으로 해석하라고 넣어주기 
-            document.querySelector("tbody").innerHTML=data;
+            
+            // tr 을 누적할 변수 
+            let trs="";
+            for(let i=0; i<data.length; i++){
+               //tmp 는 회원 한명의 정보가 들어 있는 object 이다.
+               let tmp=data[i];
+               // tr 의 template 문자열을 읽어온다. 
+               let template=document.querySelector("#one").innerText;
+               // template 문자열에 tmp 의 값을 넣어서 결과 문자열 html 을 얻어낸다.
+               let result = eval('`'+template+'`');
+               //결과를 trs 에 누적 시킨다 
+               trs += result;
+            }
+            // trs 를 html 로 해석해서 tbody 에 넣어주기 
+            document.querySelector("tbody").innerHTML=trs;
          });
          
          ajaxPromise("ajax_pagination.jsp", "get", "pageNum="+pageNum)
@@ -130,7 +116,20 @@
             document.querySelector(".pagination").innerHTML=data;
          });
       }
+   
       
+      //페이지 이동 버튼을 눌렀을때 호출되는 함수 
+      function movePage(pageNum){
+    	 history.pushState(pageNum,"","?pageNum="+pageNum);
+         pageUpdate(pageNum);
+      }
+      window.onpopstate=function(event){
+    	  console.log("popstate!");
+    	  //event.state	는 history.pushState(데이터,x,x); 에서 담았던 데이터 이다.
+    	  console.log(event.state);
+    	  //페이지 번호로 활용하면 된다.
+    	  pageUpdate(event.state);
+      }
    </script>
 </body>
 </html>

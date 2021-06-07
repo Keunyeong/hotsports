@@ -58,18 +58,6 @@
 			console.log("모든 공부를 마쳤습니다. 불금 입니다. 주말 잘 보내세요.")
 		});
 		
-		work("달리기",function(){
-			fetch(work)
-			.then(function(){
-				work("쉬기",function(){
-					fetch(work)
-					.then(function(){
-						"밥먹기"
-					})
-				})
-			})
-		});
-		
 		
 	</script>
 </body>
