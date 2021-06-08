@@ -217,7 +217,7 @@ public class MemberDao {
 	         		" from" + 
 	         		" (select num,name,addr" + 
 	         		" from member" + 
-	         		" order by num asc) result1)" + 
+	         		" order by num desc) result1)" + 
 	         		" where rnum>=? and rnum<=?";
 	         //PreparedStatement 객체의 참조값 얻어오기
 	         pstmt = conn.prepareStatement(sql);

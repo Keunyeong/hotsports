@@ -1,8 +1,7 @@
-<%@page import="test.member.dto.MemberDto"%>
 <%@page import="test.member.dao.MemberDao"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="application/json; charset=UTF-8"
+    pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%
    //한 페이지에 몇개씩 표시할 것인지
    final int PAGE_ROW_COUNT=5;
@@ -41,30 +40,13 @@
    if(endPageNum > totalPageCount){
       endPageNum=totalPageCount; //보정해 준다.
    }
-   
 %>    
-      
-<%if(startPageNum != 1){ %>
-   <li class="page-item">
-      <a class="page-link" href="javascript:movePage(<%=startPageNum-1 %>)">&laquo;</a>
-   </li>   
-<%} %>
+{
+   "pageNum":<%=pageNum %>,
+   "startPageNum":<%=startPageNum %>,
+   "endPageNum":<%=endPageNum %>,
+   "totalPageCount":<%=totalPageCount %>
+}   
 
-<%for(int i=startPageNum; i<=endPageNum ; i++){ %>
-   <%if(pageNum == i){ %>
-      <li class="page-item active">
-         <a class="page-link" href="ljavascript:movePage(<%=i %>)"><%=i %></a>
-      </li>   
-   <%}else{ %>
-      <li class="page-item">
-         <a class="page-link" href="javascript:movePage(<%=i %>)"><%=i %></a>
-      </li>
-   <%} %>
-<%} %>
-<%if(endPageNum < totalPageCount){ %>
-   <li class="page-item">
-      <a class="page-link" href="javascript:movePage(<%=endPageNum+1 %>)">&raquo;</a>
-   </li>
-<%} %>
 
 		
