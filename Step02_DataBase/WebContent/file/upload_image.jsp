@@ -26,18 +26,18 @@
    // <input type="text" name="comment" /> 에 입력한 문자열 얻어오기
    String comment=mr.getParameter("comment");
    // <input type="file" name="myFile" /> 을 통해서 업로드된 파일을 access 할수 있는 File 객체
-   File myFile=mr.getFile("myFile");
+   File myFile=mr.getFile("image");
    //파일의 크기 (byte)
    long fileSize=myFile.length();   
    //원본 파일명 
-   String orgFileName=mr.getOriginalFileName("myFile");
+   String orgFileName=mr.getOriginalFileName("image");
    /*
       파일 시스템에 저장된 파일명
       - upload 폴더안에 동일한 이름의 파일이 없으면 원본 파일명과 동일하게 저장된다.
       - upload 폴더안에 동일한 이름의 파일이 있으면 파일명 뒤에 1, 2, 3 ... 숫자를 자동으로 부여해서 저장한다.
         ex)  image.jpg  image1.jpg  image2.jpg ...
    */
-   String saveFileName=mr.getFilesystemName("myFile");
+   String saveFileName=mr.getFilesystemName("image");
 %>    
 <!DOCTYPE html>
 <html>
@@ -52,7 +52,8 @@
    <p> orgFileName : <strong><%=orgFileName %></strong></p>
    <p> saveFileName : <strong><%=saveFileName %></strong></p>
    <p> 서버의 파일시스템에서 저장된 실제 경로 : <strong><%=path %></strong></p>
-   
+   <p>미리보기</p>
+   <img src="<%=request.getContextPath()%>/upload/<%=saveFileName%>" alt="" />
    <a href="download.jsp?fileSize=<%=fileSize%>&orgFileName=<%=orgFileName%>&saveFileName=<%=saveFileName%>">방금 업로드한 파일 다운로드 테스트</a>
-</body>
+   </body>
 </html>
