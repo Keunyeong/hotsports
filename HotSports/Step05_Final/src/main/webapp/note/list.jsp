@@ -58,7 +58,7 @@
 <body>
    <div class="container">
    <a href="private/insertform.jsp">새글 작성</a>
-   <h1>글 목록 입니다.</h1>
+   <h1>개발자 노트 입니다.</h1>
    <table>
       <thead>
          <tr>

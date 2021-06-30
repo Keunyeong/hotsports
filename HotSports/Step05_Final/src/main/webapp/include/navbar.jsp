@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%
+       String id=(String)request.getSession().getAttribute("id");
        // thisPage 라는 파라미터명으로 전달되는 문자열을 얻어와 본다. 
        // null or "member" or "todo"
        String thisPage=request.getParameter("thisPage");
@@ -25,19 +26,28 @@
           <div class="collapse navbar-collapse" id="navbarNav">
                <ul class="navbar-nav flex-glow-1">
                  <li class="nav-item">
-                      <a class="nav-link <%=thisPage.equals("member") ? "active" : "" %>" href="<%=request.getContextPath() %>/member/list.jsp">Member</a>
+                      <a class="nav-link <%=thisPage.equals("cafe") ? "active" : "" %>" href="<%=request.getContextPath()%>/cafe/list.jsp">cafe</a>
                  </li>
                  <li class="nav-item">
-                      <a class="nav-link <%=thisPage.equals("member2") ? "active" : "" %>" href="<%=request.getContextPath() %>/member/list2.jsp">Member2</a>
+                      
+                      <a class="nav-link <%=thisPage.equals("file") ? "active" : "" %>" href="<%=request.getContextPath()%>/file/list.jsp">file</a>
                  </li>
                  <li class="nav-item">
-                      <a class="nav-link <%=thisPage.equals("todo") ? "active" : "" %>" href="<%=request.getContextPath() %>/todo/list.jsp">Todo</a>
+                      <a class="nav-link <%=thisPage.equals("note") ? "active" : "" %>" href="<%=request.getContextPath()%>/note/list.jsp">note</a>
                  </li>
                </ul>
+               <%if(id!=null){ %>
                <div class="w-100 clearfix">
-                  <a class="btn btn-danger btn-sm float-end ms-1" href="<%=request.getContextPath() %>/user/signup_form.jsp">회원가입</a>
-                  <a class="btn btn-success btn-sm float-end" href="<%=request.getContextPath() %>/user/loginform.jsp">로그인</a>
+                <a class="btn btn-danger btn-sm float-end" href="<%=request.getContextPath() %>/users/logout.jsp">로그아웃</a>
+               	<a class="btn btn-success btn-sm float-end ms-1" href="<%=request.getContextPath() %>/users/private/info.jsp"><%=id %>님이 로그인 중...</a>
+				
                </div>
+               <%}else{ %>
+               <div class="w-100 clearfix">
+                  <a class="btn btn-danger btn-sm float-end ms-1" href="<%=request.getContextPath() %>/users/signup_form.jsp">회원가입</a>
+                  <a class="btn btn-success btn-sm float-end" href="<%=request.getContextPath() %>/users/loginform.jsp">로그인</a>
+               </div>
+               <%} %>
           </div>
       </div>
    </nav>

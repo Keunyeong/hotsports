@@ -43,4 +43,4 @@
    //JSONObject 의 static 메소드를 이용해서 List 에 있는 내용을 JSON 문자열로 변환하기 
    String result=JSONObject.valueToString(list);
 %>
-<%=result %>    
+<%=result %>
